@@ -1,0 +1,6 @@
+FROM alpine:latest
+RUN apk add --no-cache bash curl
+WORKDIR /root
+COPY ./benchmark.sh /root/
+CMD ["/bin/bash"]
+

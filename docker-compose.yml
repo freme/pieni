@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  my-golang-app-run:
+    container_name: my-golang-app-run
+    build: .
+    command: pieni
+    volumes:
+      - ./src:/root/
+    working_dir: /root
+    ports:
+      - "3030:3001"
+    environment:
+      PORT: 3001
+

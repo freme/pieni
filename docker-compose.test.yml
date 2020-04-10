@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  pieni:
+    container_name: pieni
+    build: .
+    command: pieni
+    volumes:
+      - ./src:/root/
+    working_dir: /root
+    environment:
+      PIENI_PORT: 3000
+    networks:
+      - pieni
+
+  pieni-test:
+    container_name: pieni-test
+    build:
+      context: .
+      dockerfile: Dockerfile-test
+    working_dir: /root
+    command: "./benchmark.sh http://pieni:3000"
+    networks:
+      - pieni
+
+networks:
+    pieni:

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pieni</title>
+    <style>
+        main {
+            max-width: 38rem;
+            padding: 2rem;
+            margin: auto;
+        }
+        input {
+            font-family: monospace;
+            font-size: 16px
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid grey;
+            border-top: 1px solid grey;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <pre style="font-size: 24px;">
+<a href="/">//Pieni// :: finnish->small</a> 
+    </pre>
+    <pre style="font-size: 16px;">
+    Pieni is a very simple file server.
+    Upload up to 100mb at any file path.
+    You can overwrite files.
+    Files are deleted after 1 day.
+
+    Try it out:
+    <form
+        enctype="multipart/form-data"
+        method="post"
+        onsubmit="get_action(this);"
+        >
+        <label for="file">Uploading file to <span id="url1">URL</span><input id=path type="text" /></label>
+        <br />
+        <input type="file" name="textFile" />
+        <br/>
+        <input type="submit" value="Upload" />
+    </form>
+    Or use curl:
+        curl -F 'textFile=@filename' <span id="url2">URL</span><span id="random2">RandomFileName</span>/postform
+        curl -X PUT -F 'textFile=@filename' <span id="url3">URL</span><span id="random3">RandomFileName</span>/putform
+        curl -T filename <span id="url4">URL</span><span id="random4">RandomFileName</span>/postfile
+        curl -X PUT -T filename <span id="url5">URL</span><span id="random5">RandomFileName</span>/putfile
+
+    You can upload full folder structures:
+        find . -type f -exec curl -T {} https://pieni.k8s.dev.goto-rtc.com/my/base/path/{} \;
+    
+    And even go full parallel (while allowing whitespace and linebreaks in the filenames):
+        find . -type f -print0  | parallel -q0 -j 16 curl -T {} https://pieni.k8s.dev.goto-rtc.com/my/base/path/{}
+
+    </pre>
+
+    <script>
+        let random = Math.random().toString(35).substring(2)
+        let gbid = (d) => document.getElementById(d)
+        let path1 = gbid("path")
+        let path2 = gbid("random2")
+        let path3 = gbid("random3")
+        let path4 = gbid("random4")
+        let path5 = gbid("random5")
+        let url1 = gbid("url1")
+        let url2 = gbid("url2")
+        let url3 = gbid("url3")
+        let url4 = gbid("url4")
+        let url5 = gbid("url5")
+        url1.innerHTML = window.location.href;
+        url2.innerHTML = window.location.href;
+        url3.innerHTML = window.location.href;
+        url4.innerHTML = window.location.href;
+        url5.innerHTML = window.location.href;
+        path1.value = random
+        path2.innerHTML = random
+        path3.innerHTML = random
+        path4.innerHTML = random
+        path5.innerHTML = random
+
+        function get_action(form) {
+            form.action = window.location.href + path.value
+        }
+    </script>
+</body>
+</html>
