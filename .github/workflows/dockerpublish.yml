@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: freme/pieni
+  IMAGE_NAME: pieni
 
 jobs:
   # Run tests.
