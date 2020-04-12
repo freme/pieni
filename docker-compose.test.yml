@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  pieni:
+  sut:
     container_name: pieni
     build: .
     command: pieni
