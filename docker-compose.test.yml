@@ -2,7 +2,7 @@ version: '2'
 
 services:
   sut:
-    container_name: pieni
+    container_name: sut
     build: .
     command: pieni
     volumes:
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile-test
     working_dir: /root
-    command: "./benchmark.sh http://pieni:3000"
+    command: "./benchmark.sh http://sut:3000"
     networks:
       - pieni
 
