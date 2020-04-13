@@ -18,24 +18,38 @@ import (
 
 const
 (
-    maxUploadSize = 100 * 1024 * 1024 + 512 // 100mb plus fringe
-    ADMIN_USER = "admin"
-    ADMIN_PASSWORD = "admin"
-    USER = "user"
-    PASSWORD = "user"
+    maxUploadSize int64 = 100 * 1024 * 1024 + 512 // 100mb plus fringe
+    ADMIN_USER string = "admin"
+    ADMIN_PASSWORD string = "admin"
+    USER string = "user"
+    PASSWORD string = "user"
+    PIENI_PORT string = ":3001"
 )
 
 func BasicAuth(handler http.HandlerFunc, realm string, account string) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
     var cred_user string
     var cred_pass string
+    var ok bool
 
     if account == "admin" {
-        cred_user = ADMIN_USER
-        cred_pass = ADMIN_PASSWORD
+        cred_user, ok = os.LookupEnv("PIENI_ADMIN")
+        if !ok {
+            cred_user = ADMIN_USER
+        }
+        cred_pass, ok = os.LookupEnv("PIENI_ADMIN_PASSWORD")
+        if !ok {
+            cred_pass = ADMIN_PASSWORD
+        }
     } else {
-        cred_user = USER
-        cred_pass = PASSWORD
+        cred_user, ok = os.LookupEnv("PIENI_USER")
+        if !ok {
+            cred_user = USER
+        }
+        cred_pass, ok = os.LookupEnv("PIENI_USER_PASSWORD")
+        if !ok {
+            cred_pass = PASSWORD
+        }
     }
 
     user, pass, ok := r.BasicAuth()
@@ -341,7 +355,7 @@ func main() {
 
     port, ok := os.LookupEnv("PIENI_PORT")
     if !ok {
-        port = ":3001"
+        port = PIENI_PORT
     } else {
         port = ":" + port
     }

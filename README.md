@@ -22,3 +22,10 @@ small file server
 
 - click
 - enjoy
+
+# Environment Variables
+- *PIENI_USER*: default 'user'
+- *PIENI_USER_PASSWORD*: default 'user'
+- *PIENI_ADMIN*: default 'admin'
+- *PIENI_ADMIN_PASSWORD*: default 'admin'
+- *PIENI_PORT*: default '3001' 
